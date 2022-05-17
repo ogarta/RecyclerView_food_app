@@ -1,7 +1,5 @@
 package com.example.foodapp;
 
-import android.icu.util.IslamicCalendar;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
@@ -91,6 +89,7 @@ public class FoodModel {
     public void setCloseTime(Date closeTime) {
         this.closeTime = closeTime;
     }
+
     public static List<FoodModel> getMock(){
         return new ArrayList<>(Arrays.asList(
             new FoodModel(R.drawable.foody_com_tam_minh_long,"Cơm Tấm Minh Long - Nguyễn Thị Thập","607 Nguyễn Thị Thập, P. Tân Hưng, Quận 7, TP. HCM",Arrays.asList(CatetoryItem.FAMILY,CatetoryItem.SHOP_ONLINE),"Ca ngay - 30%",22f,Utils.createDateForHour(7),Utils.createDateForHour(21)),
@@ -105,6 +104,7 @@ public class FoodModel {
             new FoodModel(R.drawable.foody_streetfood_banh_mi_bo_a_tung,"A Tùng - Bánh Mì Bò Nướng Bơ Cambodia - Cống Quỳnh","171 Cống Quỳnh,  Quận 1, TP. HCM",Arrays.asList(CatetoryItem.STREETFOOD,CatetoryItem.SHOP_ONLINE,CatetoryItem.GROUP),"Không có ưu đãi",11f,Utils.createDateForHour(14),Utils.createDateForHour(21)),
             new FoodModel(R.drawable.foody_shop_online_bep_rua,"Bếp Rùa - Chân Gà Rút Xương Ngâm Sả Tắc - Shop Online","127/5/9 Lê Thúc Hoạch, P. Phú Thọ Hòa,  Quận Tân Phú, TP. HCM",Arrays.asList(CatetoryItem.SHOP_ONLINE,CatetoryItem.GROUP,CatetoryItem.FAMILY),"Ca ngay 10%",20f,Utils.createDateForHour(5),Utils.createDateForHour(24)),
             new FoodModel(R.drawable.foody_shop_online_bep_9_sach,"Bánh 9 Sạch - Bánh Sầu Riêng - Shop Online","73 An Dương Vương, P. 8,  Quận 5, TP. HCM",Arrays.asList(CatetoryItem.SHOP_ONLINE,CatetoryItem.GROUP,CatetoryItem.FAMILY),"Ca ngay 5%",16f,Utils.createDateForHour(8),Utils.createDateForHour(21))
+
             ));
     }
 

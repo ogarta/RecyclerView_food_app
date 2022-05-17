@@ -8,5 +8,6 @@ public class Utils {
         Date date = new Date();
         date.setTime(hour * 360000);
         return date;
+
     }
 }
