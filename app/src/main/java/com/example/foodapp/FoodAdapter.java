@@ -11,6 +11,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.zip.DataFormatException;
@@ -53,6 +54,12 @@ public class FoodAdapter extends RecyclerView.Adapter<FoodAdapter.ViewHolder>{
 
         ImageView img;
         TextView txtTimeOpen, txtName, txtAddress, txtCategory, txtDiscount, txtDistance, txtTime;
+        int hourCurrent = 0;
+        int minusCurrent = 0;
+        int hourOpenModel = 0;
+        int minusOpenModel = 0;
+        int hourCloseModel = 0;
+        int minusCloseModel = 0;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -67,28 +74,39 @@ public class FoodAdapter extends RecyclerView.Adapter<FoodAdapter.ViewHolder>{
 
         }
         public void bind(FoodModel foodModel){
-            if(foodModel.getCloseTime()<date.getHours()){
+            Calendar calendar = Calendar.getInstance();
+            hourCurrent = calendar.get(Calendar.HOUR_OF_DAY);
+            minusCurrent = calendar.get(Calendar.MINUTE);
+            hourOpenModel = Utils.milliToHour(foodModel.getOpenTime());
+            minusOpenModel = Utils.milliToMinus(foodModel.getOpenTime());
+            hourCloseModel = Utils.milliToHour(foodModel.getCloseTime());
+            minusCloseModel = Utils.milliToMinus(foodModel.getCloseTime());
+            // them dieu kien
+            if ((hourCurrent < hourOpenModel) || (hourCurrent > hourCloseModel) || (hourCurrent == hourOpenModel && minusCurrent < minusOpenModel) || (hourCurrent == hourCloseModel && minusCurrent > minusCloseModel)) {
                 txtTimeOpen.setVisibility(View.VISIBLE);
-                txtTimeOpen.setBackgroundColor(Color.parseColor("#B4000000"));
-                txtTimeOpen.setText("Đóng cửa \n Đặt bàn vào lúc "+foodModel.getOpenTime()+":00");
-
+                txtTimeOpen.setText(String.format("Đóng cửa\nMở cửa vào lúc %s", Utils.formatTimeToString(foodModel.getOpenTime())));
+                txtTimeOpen.setBackgroundColor(Color.parseColor("#66000000"));
             }
-
+            if(!foodModel.getDiscount().equals("Không có ưu đãi")){
+                txtDiscount.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_new,0,0,0);
+            }
             img.setImageResource(foodModel.getImage());
             txtName.setText(foodModel.getName());
             txtAddress.setText(foodModel.getAddress());
-            txtCategory.setText(catetory(foodModel.getCatetoryItemList()));
+            txtCategory.setText(catetory(foodModel.getCategoryList()));
             txtDiscount.setText(foodModel.getDiscount());
-            txtDiscount.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_new,0,0,0);
-            txtDistance.setText(Float.toString(foodModel.getDistance()));
-            txtTime.setText(foodModel.getOpenTime()+":00" +" - "+foodModel.getCloseTime()+":00");
+            txtDistance.setText(String.format(">%.2fkm",foodModel.getDistance()));
+            txtTime.setText((String.format("%s - %s",Utils.formatTimeToString(foodModel.getOpenTime()),Utils.formatTimeToString(foodModel.getCloseTime()))));
         }
 
-        private String catetory(List<CatetoryItem> catetoryItemList){
-            String sCate = "";
-            for (CatetoryItem cate: catetoryItemList) {
-                sCate += cate.name() +"/";
-                Log.d("ahihi", cate.name());
+        private StringBuilder catetory(List<CatetoryItem> catetoryItemList){
+            StringBuilder sCate = new StringBuilder();
+            for (int i = 0; i < catetoryItemList.size(); i++) {
+                if(i == catetoryItemList.size()-1){
+                    sCate.append(catetoryItemList.get(i).getText());
+                }else{
+                    sCate.append(catetoryItemList.get(i).getText()+"/");
+                }
             }
             return sCate;
         }
