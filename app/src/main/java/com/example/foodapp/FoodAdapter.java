@@ -1,6 +1,7 @@
 package com.example.foodapp;
 
 import android.graphics.Color;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -72,14 +73,24 @@ public class FoodAdapter extends RecyclerView.Adapter<FoodAdapter.ViewHolder>{
                 txtTimeOpen.setText("Đóng cửa \n Đặt bàn vào lúc "+foodModel.getOpenTime()+":00");
 
             }
+
             img.setImageResource(foodModel.getImage());
             txtName.setText(foodModel.getName());
             txtAddress.setText(foodModel.getAddress());
-            txtCategory.setText(foodModel.getCatetoryItemList().get(0).name());
+            txtCategory.setText(catetory(foodModel.getCatetoryItemList()));
             txtDiscount.setText(foodModel.getDiscount());
             txtDiscount.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_new,0,0,0);
             txtDistance.setText(Float.toString(foodModel.getDistance()));
             txtTime.setText(foodModel.getOpenTime()+":00" +" - "+foodModel.getCloseTime()+":00");
+        }
+
+        private String catetory(List<CatetoryItem> catetoryItemList){
+            String sCate = "";
+            for (CatetoryItem cate: catetoryItemList) {
+                sCate += cate.name() +"/";
+                Log.d("ahihi", cate.name());
+            }
+            return sCate;
         }
     }
 }
