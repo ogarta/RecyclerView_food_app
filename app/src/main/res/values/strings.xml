@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Food App</string>
+    <string name="discount"><font color='#0061F2'>Ca ngay</font> - <font color='#F27400'>Giam 20%</font></string>
 </resources>
